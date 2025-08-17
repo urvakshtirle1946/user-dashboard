@@ -23,8 +23,7 @@ export default function Profile() {
 
   useEffect(() => {
     if (isClient && !isAuthenticated) {
-      const router = require('next/router').useRouter()
-      router.push('/')
+      window.location.href = '/'
     } else if (user) {
       setFormData({
         name: user.name || '',

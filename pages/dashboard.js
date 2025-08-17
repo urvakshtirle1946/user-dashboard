@@ -17,8 +17,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (isClient && !isAuthenticated) {
-      const router = require('next/router').useRouter()
-      router.push('/')
+      window.location.href = '/'
     }
   }, [isClient, isAuthenticated])
 

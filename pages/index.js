@@ -20,8 +20,7 @@ export default function Login() {
 
   useEffect(() => {
     if (isClient && isAuthenticated) {
-      const router = require('next/router').useRouter()
-      router.push('/dashboard')
+      window.location.href = '/dashboard'
     }
   }, [isClient, isAuthenticated])
 
