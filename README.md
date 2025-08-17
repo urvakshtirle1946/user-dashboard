@@ -2,6 +2,10 @@
 
 A modern, responsive user dashboard application built with Next.js, Zustand, and Tailwind CSS.
 
+## Project Details
+
+https://userss-dashboard.vercel.app/
+
 ## Features
 
 - 🔐 **Authentication**: Login and registration with form validation
