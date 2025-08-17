@@ -1,15 +1,18 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 import useStore from '../store/useStore'
 
 const SimpleSidebar = () => {
-  const router = useRouter()
   const { user, logout, isDarkMode, toggleDarkMode } = useStore()
+  const [currentPath, setCurrentPath] = useState('')
+
+  useEffect(() => {
+    setCurrentPath(window.location.pathname)
+  }, [])
 
   const handleLogout = () => {
     logout()
-    router.push('/')
+    window.location.href = '/'
   }
 
 
@@ -47,7 +50,7 @@ const SimpleSidebar = () => {
                href={item.href}
                className={`
                  flex items-center px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 group cursor-pointer
-                 ${router.pathname === item.href
+                 ${currentPath === item.href
                    ? 'bg-black dark:bg-white text-white dark:text-black'
                    : 'text-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800'
                  }
@@ -56,7 +59,7 @@ const SimpleSidebar = () => {
              >
               <span className="mr-3 text-lg">{item.icon}</span>
               {item.label}
-              {router.pathname === item.href && (
+              {currentPath === item.href && (
                 <div className="ml-auto w-2 h-2 bg-white dark:bg-black rounded-full"></div>
               )}
             </Link>
