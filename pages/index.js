@@ -20,6 +20,18 @@ export default function Login() {
     }
   }, [isAuthenticated, router])
 
+  // Show loading state during SSR
+  if (typeof window === 'undefined') {
+    return (
+      <div className="min-h-screen bg-white dark:bg-black flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-black dark:border-white mx-auto"></div>
+          <p className="mt-2 text-gray-600 dark:text-gray-400">Loading...</p>
+        </div>
+      </div>
+    )
+  }
+
   const validateForm = () => {
     const newErrors = {}
 

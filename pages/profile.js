@@ -86,9 +86,16 @@ export default function Profile() {
     }
   }
 
-  if (!isAuthenticated) {
-    router.push('/')
-    return null
+  // Show loading state during SSR or when not authenticated
+  if (typeof window === 'undefined' || !isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-white dark:bg-black flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-black dark:border-white mx-auto"></div>
+          <p className="mt-2 text-gray-600 dark:text-gray-400">Loading...</p>
+        </div>
+      </div>
+    )
   }
 
   return (
