@@ -6,7 +6,6 @@ import SimpleSidebar from '../components/SimpleSidebar'
 import FormInput from '../components/FormInput'
 
 export default function Profile() {
-  const router = useRouter()
   const { user, isAuthenticated, updateProfile } = useStore()
   const [formData, setFormData] = useState({
     name: '',
@@ -16,9 +15,15 @@ export default function Profile() {
   const [errors, setErrors] = useState({})
   const [isLoading, setIsLoading] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
+  const [isClient, setIsClient] = useState(false)
 
   useEffect(() => {
-    if (!isAuthenticated) {
+    setIsClient(true)
+  }, [])
+
+  useEffect(() => {
+    if (isClient && !isAuthenticated) {
+      const router = require('next/router').useRouter()
       router.push('/')
     } else if (user) {
       setFormData({
@@ -27,7 +32,7 @@ export default function Profile() {
         bio: user.bio || '',
       })
     }
-  }, [isAuthenticated, router, user])
+  }, [isClient, isAuthenticated, user])
 
   const validateForm = () => {
     const newErrors = {}
@@ -87,7 +92,7 @@ export default function Profile() {
   }
 
   // Show loading state during SSR or when not authenticated
-  if (typeof window === 'undefined' || !isAuthenticated) {
+  if (!isClient || !isAuthenticated) {
     return (
       <div className="min-h-screen bg-white dark:bg-black flex items-center justify-center">
         <div className="text-center">

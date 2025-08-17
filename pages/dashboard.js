@@ -6,16 +6,21 @@ import SimpleSidebar from '../components/SimpleSidebar'
 import TaskItem from '../components/TaskItem'
 
 export default function Dashboard() {
-  const router = useRouter()
   const { user, isAuthenticated, tasks, addTask } = useStore()
   const [newTask, setNewTask] = useState({ title: '', description: '' })
   const [showAddForm, setShowAddForm] = useState(false)
+  const [isClient, setIsClient] = useState(false)
 
   useEffect(() => {
-    if (!isAuthenticated) {
+    setIsClient(true)
+  }, [])
+
+  useEffect(() => {
+    if (isClient && !isAuthenticated) {
+      const router = require('next/router').useRouter()
       router.push('/')
     }
-  }, [isAuthenticated, router])
+  }, [isClient, isAuthenticated])
 
   const handleAddTask = (e) => {
     e.preventDefault()
@@ -33,7 +38,7 @@ export default function Dashboard() {
   const pendingTasks = tasks.filter(task => !task.completed)
 
   // Show loading state during SSR or when not authenticated
-  if (typeof window === 'undefined' || !isAuthenticated) {
+  if (!isClient || !isAuthenticated) {
     return (
       <div className="min-h-screen bg-white dark:bg-black flex items-center justify-center">
         <div className="text-center">

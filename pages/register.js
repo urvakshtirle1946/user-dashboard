@@ -5,7 +5,6 @@ import useStore from '../store/useStore'
 import FormInput from '../components/FormInput'
 
 export default function Register() {
-  const router = useRouter()
   const { login, isAuthenticated } = useStore()
   const [formData, setFormData] = useState({
     name: '',
@@ -15,15 +14,21 @@ export default function Register() {
   })
   const [errors, setErrors] = useState({})
   const [isLoading, setIsLoading] = useState(false)
+  const [isClient, setIsClient] = useState(false)
 
   useEffect(() => {
-    if (isAuthenticated) {
+    setIsClient(true)
+  }, [])
+
+  useEffect(() => {
+    if (isClient && isAuthenticated) {
+      const router = require('next/router').useRouter()
       router.push('/dashboard')
     }
-  }, [isAuthenticated, router])
+  }, [isClient, isAuthenticated])
 
   // Show loading state during SSR
-  if (typeof window === 'undefined') {
+  if (!isClient) {
     return (
       <div className="min-h-screen bg-white dark:bg-black flex items-center justify-center">
         <div className="text-center">
