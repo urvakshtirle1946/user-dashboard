@@ -54,11 +54,11 @@ export default function Dashboard() {
         <meta name="description" content="Manage your tasks and notes" />
       </Head>
       
-      <div className="min-h-screen bg-white dark:bg-black">
-        <div className="flex h-screen">
-          <SimpleSidebar />
-          
-          <main className="flex-1 p-8 overflow-y-auto">
+             <div className="min-h-screen bg-white dark:bg-black">
+         <div className="flex h-screen">
+           <SimpleSidebar />
+           
+           <main className="flex-1 p-4 md:p-8 overflow-y-auto">
             <div className="max-w-6xl mx-auto">
               <div className="mb-8 animate-fade-in">
                 <h1 className="text-3xl font-bold text-black dark:text-white mb-3">
